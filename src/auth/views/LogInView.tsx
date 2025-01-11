@@ -1,9 +1,13 @@
-import Form from "../components/Form";
+import Form from "../../common/components/form/Form";
+
+import useValidationErrors from "../../common/hooks/useValidationErrors";
 
 import { logIn } from "../services/service";
 
+import { validateLoginData } from "../schemas/auth";
+
 import type { FormEvent } from "react";
-import type { FormGroupProps } from "../components/FormGroup";
+import type { FormGroupProps } from "../../common/components/form/FormGroup";
 import type { ILogin } from "../types/auth";
 
 const formGroups: FormGroupProps[] = [
@@ -36,14 +40,25 @@ const formGroups: FormGroupProps[] = [
 ];
 
 export default function LogInView() {
+  const [errors, setError] = useValidationErrors<ILogin>({
+    email: "",
+    password: "",
+  });
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const data = Object.fromEntries(new FormData(event.currentTarget));
+    const formData = Object.fromEntries(new FormData(event.currentTarget));
 
-    //TODO: add validation
+    const { data, error } = validateLoginData(formData);
 
-    const res = await logIn(data as unknown as ILogin);
+    if (error) {
+      setError(error);
+
+      return;
+    }
+
+    const res = await logIn(data);
 
     if (res instanceof Error) {
       alert(res.message);
@@ -55,6 +70,11 @@ export default function LogInView() {
   };
 
   return (
-    <Form onSubmit={handleSubmit} title="Log in" formGroups={formGroups} />
+    <Form
+      errors={errors}
+      onSubmit={handleSubmit}
+      title="Log in"
+      formGroups={formGroups}
+    />
   );
 }

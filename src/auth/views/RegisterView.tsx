@@ -1,9 +1,13 @@
-import Form from "../components/Form";
+import Form from "../../common/components/form/Form";
+
+import useValidationErrors from "../../common/hooks/useValidationErrors";
 
 import { register } from "../services/service";
 
+import { validateRegisterData } from "../schemas/auth";
+
 import type { FormEvent } from "react";
-import type { FormGroupProps } from "../components/FormGroup";
+import type { FormGroupProps } from "../../common/components/form/FormGroup";
 import type { IRegister } from "../types/auth";
 
 const formGroups: FormGroupProps[] = [
@@ -49,12 +53,24 @@ const formGroups: FormGroupProps[] = [
 ];
 
 export default function RegisterView() {
+  const [errors, setError] = useValidationErrors<IRegister>({
+    email: "",
+    password: "",
+    fullname: "",
+  });
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const data = Object.fromEntries(new FormData(event.currentTarget));
+    const formData = Object.fromEntries(new FormData(event.currentTarget));
 
-    //TODO: add validation
+    const { data, error } = validateRegisterData(formData);
+
+    if (error) {
+      setError(error);
+
+      return;
+    }
 
     const res = await register(data as unknown as IRegister);
 
@@ -68,6 +84,11 @@ export default function RegisterView() {
   };
 
   return (
-    <Form onSubmit={handleSubmit} title="Register" formGroups={formGroups} />
+    <Form
+      onSubmit={handleSubmit}
+      title="Register"
+      errors={errors}
+      formGroups={formGroups}
+    />
   );
 }
