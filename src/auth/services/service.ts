@@ -11,6 +11,7 @@ export async function logIn(login: ILogin): Promise<IResponse | Error> {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(login),
+      credentials: "include",
     });
     const res = await petition.json();
 
@@ -30,11 +31,12 @@ export async function register(
         "Content-Type": "application/json",
       },
       body: JSON.stringify(registerData),
+      credentials: "include",
     });
     const res = await petition.json();
 
     return res;
-  } catch {
-    return new Error("Log in failed");
+  } catch (error) {
+    return error as Error;
   }
 }
