@@ -14,8 +14,6 @@ export async function logIn(login: ILogin): Promise<IResponse | Error> {
     });
     const res = await petition.json();
 
-    alert(res);
-
     return res;
   } catch (error) {
     return error as Error;
