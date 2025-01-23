@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 
 import { getChats } from "../services/service";
 
-import type { IChat } from "../types/chat";
+import type { IChatWithMembers } from "../types/chat";
 
 export default function useChats(): {
-  chats: IChat[] | null;
+  chats: IChatWithMembers[] | null;
   error: Error | null;
   loading: boolean;
 } {
-  const [chats, setChats] = useState<IChat[] | null>(null);
+  const [chats, setChats] = useState<IChatWithMembers[] | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const loading = chats === null && error === null;
 
