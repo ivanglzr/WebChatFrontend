@@ -6,10 +6,15 @@ export interface ICreateChat {
   memberIds: UUID[];
 }
 
+//TODO: message interfaces
 export interface IChat extends ICreateChat {
   id: UUID;
   ownerId: UUID;
   owner: IUser;
+  messages: {
+    content: string;
+    sent: boolean;
+  }[];
 }
 
 export interface IChatWithMembers extends IChat {
