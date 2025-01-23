@@ -1,5 +1,6 @@
 import Form from "../../common/components/form/Form";
 
+import { useNavigate } from "react-router";
 import useValidationErrors from "../../common/hooks/useValidationErrors";
 
 import { logIn } from "../services/service";
@@ -9,6 +10,8 @@ import { validateLoginData } from "../schemas/auth";
 import type { FormEvent } from "react";
 import type { FormGroupProps } from "../../common/components/form/FormGroup";
 import type { ILogin } from "../types/auth";
+
+import { ROUTES } from "../../routes";
 
 const formGroups: FormGroupProps[] = [
   {
@@ -40,6 +43,8 @@ const formGroups: FormGroupProps[] = [
 ];
 
 export default function LogInView() {
+  const navigate = useNavigate();
+
   const [errors, setError] = useValidationErrors<ILogin>({
     email: "",
     password: "",
@@ -66,7 +71,7 @@ export default function LogInView() {
       return;
     }
 
-    alert(res.message);
+    navigate(ROUTES.HOME);
   };
 
   return (
