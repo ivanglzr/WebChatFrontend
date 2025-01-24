@@ -6,6 +6,8 @@ import { createRoot } from "react-dom/client";
 import AuthLayout from "./auth/components/AuthLayout.tsx";
 import { AuthContextProvider } from "./auth/context/auth-provider.tsx";
 
+import { ChatsContextProvider } from "./chat/context/chats-provider.tsx";
+
 import App from "./App.tsx";
 import LogInView from "./auth/views/LogInView.tsx";
 import RegisterView from "./auth/views/RegisterView.tsx";
@@ -22,7 +24,14 @@ createRoot(document.getElementById("root")!).render(
           </AuthContextProvider>
         }
       >
-        <Route path="/" element={<App />} />
+        <Route
+          path="/"
+          element={
+            <ChatsContextProvider>
+              <App />
+            </ChatsContextProvider>
+          }
+        />
       </Route>
       <Route path={ROUTES.LOG_IN} element={<LogInView />} />
       <Route path={ROUTES.REGISTER} element={<RegisterView />} />

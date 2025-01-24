@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 
-import { getChats } from "../services/service";
+import { ChatsContext } from "../context/chats-context";
 
 import type { IChatWithMembers } from "../types/chat";
 
@@ -9,19 +9,12 @@ export default function useChats(): {
   error: Error | null;
   loading: boolean;
 } {
-  const [chats, setChats] = useState<IChatWithMembers[] | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const loading = chats === null && error === null;
+  const context = useContext(ChatsContext);
 
-  useEffect(() => {
-    getChats().then((res) => {
-      if (res instanceof Error) {
-        setError(res);
-      } else {
-        setChats(res.data);
-      }
-    });
-  }, []);
+  if (!context)
+    throw new Error(
+      "To use chats context the component must be inside a provider"
+    );
 
-  return { chats, error, loading };
+  return context;
 }
