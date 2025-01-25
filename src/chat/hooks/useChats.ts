@@ -2,19 +2,44 @@ import { useContext } from "react";
 
 import { ChatsContext } from "../context/chats-context";
 
+import { EChatsReducerActions } from "../types/chats-reducer";
+
 import type { IChatWithMembers } from "../types/chat";
+import type { IMessage } from "../../message/types/message";
 
-export default function useChats(): {
-  chats: IChatWithMembers[] | null;
-  error: Error | null;
-  loading: boolean;
-} {
-  const context = useContext(ChatsContext);
+export default function useChats() {
+  const { chats, error, loading, dispatch } = useContext(ChatsContext);
 
-  if (!context)
-    throw new Error(
-      "To use chats context the component must be inside a provider"
-    );
+  const addChat = (chat: IChatWithMembers) =>
+    dispatch({ type: EChatsReducerActions.ADD_CHAT, payload: chat });
 
-  return context;
+  const editChat = (payload: { chat: IChatWithMembers; chatId: string }) =>
+    dispatch({ type: EChatsReducerActions.EDIT_CHAT, payload });
+
+  const deleteChat = (chatId: string) =>
+    dispatch({ type: EChatsReducerActions.DELETE_CHAT, payload: chatId });
+
+  const addMessage = (payload: { chatId: string; message: IMessage }) =>
+    dispatch({ type: EChatsReducerActions.ADD_MESSAGE, payload });
+
+  const editMessage = (payload: {
+    chatId: string;
+    messageId: string;
+    message: IMessage;
+  }) => dispatch({ type: EChatsReducerActions.EDIT_MESSAGE, payload });
+
+  const deleteMessage = (payload: { chatId: string; messageId: string }) =>
+    dispatch({ type: EChatsReducerActions.DELETE_MESSAGE, payload });
+
+  return {
+    chats,
+    error,
+    loading,
+    addChat,
+    editChat,
+    deleteChat,
+    addMessage,
+    editMessage,
+    deleteMessage,
+  };
 }

@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { getChats } from "../services/service";
 
 import { ChatsContext } from "./chats-context";
-import { IChatWithMembers } from "../types/chat";
+import { ChatsReducer } from "../reducers/chats";
+
+import { EChatsReducerActions } from "../types/chats-reducer";
 
 interface Props {
   children: React.ReactNode;
 }
 
-//TODO: use a reducer for chats state
 export function ChatsContextProvider({ children }: Props) {
-  const [chats, setChats] = useState<IChatWithMembers[] | null>(null);
+  const [chats, dispatch] = useReducer(ChatsReducer, []);
   const [error, setError] = useState<Error | null>(null);
   const loading = chats === null && error === null;
 
@@ -22,12 +23,12 @@ export function ChatsContextProvider({ children }: Props) {
         return;
       }
 
-      setChats(res.data);
+      dispatch({ type: EChatsReducerActions.SET_CHATS, payload: res.data });
     });
   }, []);
 
   return (
-    <ChatsContext.Provider value={{ chats, error, loading }}>
+    <ChatsContext.Provider value={{ chats, error, loading, dispatch }}>
       {children}
     </ChatsContext.Provider>
   );
