@@ -4,7 +4,7 @@ import {
   TChatsReducerPayloads,
 } from "../types/chats-reducer";
 
-export function ChatReducer(
+export function ChatsReducer(
   state: IChatWithMembers[],
   action: TChatsReducerPayloads
 ) {
