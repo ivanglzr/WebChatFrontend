@@ -2,6 +2,7 @@ import type { IMessage } from "../../message/types/message";
 import type { IChatWithMembers } from "./chat";
 
 export enum EChatsReducerActions {
+  SET_CHATS = "SET_CHATS",
   ADD_MESSAGE = "ADD_NEW_MESSAGE",
   EDIT_MESSAGE = "EDIT_MESSAGE",
   DELETE_MESSAGE = "DELETE_MESSAGE",
@@ -11,6 +12,7 @@ export enum EChatsReducerActions {
 }
 
 export type TChatsReducerPayloads =
+  | { type: EChatsReducerActions.SET_CHATS; payload: IChatWithMembers[] }
   | { type: EChatsReducerActions.ADD_CHAT; payload: IChatWithMembers }
   | {
       type: EChatsReducerActions.EDIT_CHAT;

@@ -11,6 +11,12 @@ export function ChatReducer(
   const { type, payload } = action;
 
   switch (type) {
+    case EChatsReducerActions.SET_CHATS: {
+      const chats = payload;
+
+      return chats;
+    }
+
     case EChatsReducerActions.ADD_CHAT: {
       const chat = payload;
 
