@@ -1,20 +1,17 @@
 import type { UUID } from "crypto";
 import type { IUser } from "../../user/types/user";
+import type { IMessage } from "../../message/types/message";
 
 export interface ICreateChat {
   chatName: string;
   memberIds: UUID[];
 }
 
-//TODO: message interfaces
 export interface IChat extends ICreateChat {
   id: UUID;
   ownerId: UUID;
   owner: IUser;
-  messages: {
-    content: string;
-    sent: boolean;
-  }[];
+  messages: IMessage[];
 }
 
 export interface IChatWithMembers extends IChat {
