@@ -16,18 +16,18 @@ export type TChatsReducerPayloads =
   | { type: EChatsReducerActions.ADD_CHAT; payload: IChatWithMembers }
   | {
       type: EChatsReducerActions.EDIT_CHAT;
-      payload: { chatId: string; chat: IChatWithMembers };
+      payload: IChatWithMembers;
     }
   | { type: EChatsReducerActions.DELETE_CHAT; payload: string }
   | {
       type: EChatsReducerActions.ADD_MESSAGE;
-      payload: { chatId: string; message: IMessage };
+      payload: IMessage;
     }
   | {
       type: EChatsReducerActions.EDIT_MESSAGE;
-      payload: { chatId: string; messageId: string; message: IMessage };
+      payload: IMessage;
     }
   | {
       type: EChatsReducerActions.DELETE_MESSAGE;
-      payload: { chatId: string; messageId: string };
+      payload: IMessage;
     };
