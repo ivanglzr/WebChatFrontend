@@ -7,4 +7,5 @@ export interface IMessage extends ICreateMessage {
   chatId: string;
   createdAt: string;
   ownerId: string;
+  sent: boolean;
 }
