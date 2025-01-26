@@ -13,22 +13,19 @@ export default function useChats() {
   const addChat = (chat: IChatWithMembers) =>
     dispatch({ type: EChatsReducerActions.ADD_CHAT, payload: chat });
 
-  const editChat = (payload: { chat: IChatWithMembers; chatId: string }) =>
+  const editChat = (payload: IChatWithMembers) =>
     dispatch({ type: EChatsReducerActions.EDIT_CHAT, payload });
 
   const deleteChat = (chatId: string) =>
     dispatch({ type: EChatsReducerActions.DELETE_CHAT, payload: chatId });
 
-  const addMessage = (payload: { chatId: string; message: IMessage }) =>
+  const addMessage = (payload: IMessage) =>
     dispatch({ type: EChatsReducerActions.ADD_MESSAGE, payload });
 
-  const editMessage = (payload: {
-    chatId: string;
-    messageId: string;
-    message: IMessage;
-  }) => dispatch({ type: EChatsReducerActions.EDIT_MESSAGE, payload });
+  const editMessage = (payload: IMessage) =>
+    dispatch({ type: EChatsReducerActions.EDIT_MESSAGE, payload });
 
-  const deleteMessage = (payload: { chatId: string; messageId: string }) =>
+  const deleteMessage = (payload: IMessage) =>
     dispatch({ type: EChatsReducerActions.DELETE_MESSAGE, payload });
 
   return {

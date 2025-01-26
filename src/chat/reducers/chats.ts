@@ -24,9 +24,9 @@ export function ChatsReducer(
     }
 
     case EChatsReducerActions.EDIT_CHAT: {
-      const { chatId, chat } = payload;
+      const chat = payload;
 
-      const chatIndex = state.findIndex((chat) => chat.id === chatId);
+      const chatIndex = state.findIndex((c) => c.id === chat.id);
 
       if (chatIndex === -1) return state;
 
@@ -50,9 +50,9 @@ export function ChatsReducer(
     }
 
     case EChatsReducerActions.ADD_MESSAGE: {
-      const { chatId, message } = payload;
+      const message = payload;
 
-      const chatIndex = state.findIndex((chat) => chat.id === chatId);
+      const chatIndex = state.findIndex((chat) => chat.id === message.chatId);
 
       if (chatIndex === -1) return state;
 
@@ -63,14 +63,14 @@ export function ChatsReducer(
     }
 
     case EChatsReducerActions.EDIT_MESSAGE: {
-      const { chatId, messageId, message } = payload;
+      const message = payload;
 
-      const chatIndex = state.findIndex((chat) => chat.id === chatId);
+      const chatIndex = state.findIndex((chat) => chat.id === message.chatId);
 
       if (chatIndex === -1) return state;
 
       const messageIndex = state[chatIndex].messages.findIndex(
-        (message) => message.id === messageId
+        (m) => m.id === message.id
       );
 
       if (messageIndex === -1) return state;
@@ -82,14 +82,14 @@ export function ChatsReducer(
     }
 
     case EChatsReducerActions.DELETE_MESSAGE: {
-      const { chatId, messageId } = payload;
+      const message = payload;
 
-      const chatIndex = state.findIndex((chat) => chat.id === chatId);
+      const chatIndex = state.findIndex((chat) => chat.id === message.chatId);
 
       if (chatIndex === -1) return state;
 
       const messageIndex = state[chatIndex].messages.findIndex(
-        (message) => message.id === messageId
+        (message) => message.id === message.id
       );
 
       if (messageIndex === -1) return state;
