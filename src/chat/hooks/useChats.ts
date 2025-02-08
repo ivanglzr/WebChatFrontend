@@ -19,8 +19,11 @@ export default function useChats() {
   const deleteChat = (chatId: string) =>
     dispatch({ type: EChatsReducerActions.DELETE_CHAT, payload: chatId });
 
-  const addMessage = (payload: IMessage) =>
-    dispatch({ type: EChatsReducerActions.ADD_MESSAGE, payload });
+  const addMessage = (payload: IMessage, isFromUser: boolean) =>
+    dispatch({
+      type: EChatsReducerActions.ADD_MESSAGE,
+      payload: { ...payload, sent: isFromUser },
+    });
 
   const editMessage = (payload: IMessage) =>
     dispatch({ type: EChatsReducerActions.EDIT_MESSAGE, payload });
