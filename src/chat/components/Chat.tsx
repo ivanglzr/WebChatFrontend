@@ -26,11 +26,17 @@ export default function Chat({ chat }: Props) {
         {chat.messages.map((message) => (
           <li
             key={message.id}
-            className={`${
-              message.sent ? "text-right" : "text-left"
-            } inline-block`}
+            className={`${message.sent ? "text-right" : "text-left"} my-4`}
           >
-            <span className="inline-block">{message.content}</span>
+            <span
+              className={`rounded-xl p-2 ${
+                message.sent
+                  ? "outline outline-2 outline-primary"
+                  : "bg-primary text-white"
+              }`}
+            >
+              {message.content}
+            </span>
           </li>
         ))}
       </ul>

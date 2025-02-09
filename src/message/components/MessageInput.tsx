@@ -32,15 +32,15 @@ export default function MessageInput({ chatId }: Props) {
       <button
         type="submit"
         onClick={handleClick}
-        className="flex justify-center items-center bg-gray-200 p-2 rounded-full"
+        className="flex justify-center items-center bg-primary p-2 rounded-full"
       >
-        <SendIcon width={24} height={24} />
+        <SendIcon width={24} height={24} rotate={90} />
       </button>
       <input
         type="text"
         name="content"
         id="content"
-        className="w-full p-2 rounded-lg border border-black focus:outline-none"
+        className="w-full p-2 rounded-lg outline outline-1 outline-black focus:outline-2 focus:outline-primary"
         placeholder="Write here your message..."
         value={message}
         onChange={handleChange}
