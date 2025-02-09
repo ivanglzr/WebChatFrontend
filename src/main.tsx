@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import { createRoot } from "react-dom/client";
 
 import AuthLayout from "./auth/components/AuthLayout.tsx";
-import { AuthContextProvider } from "./auth/context/auth-provider.tsx";
 
 import { ChatsContextProvider } from "./chat/context/chats-provider.tsx";
 
@@ -17,13 +16,7 @@ import { ROUTES } from "./routes.ts";
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>
-      <Route
-        element={
-          <AuthContextProvider>
-            <AuthLayout />
-          </AuthContextProvider>
-        }
-      >
+      <Route element={<AuthLayout />}>
         <Route
           path="/"
           element={

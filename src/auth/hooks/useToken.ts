@@ -1,11 +1,7 @@
-import { useContext } from "react";
-
-import { AuthContext } from "../context/auth-context";
+import getAuthCookie from "../../common/utils/getAuthCookie";
 
 export default function useToken() {
-  const context = useContext(AuthContext);
+  const token = getAuthCookie();
 
-  if (!context) throw new Error("Component is not included in authProvider");
-
-  return context.token;
+  return token;
 }
