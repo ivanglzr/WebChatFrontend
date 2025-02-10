@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react";
+
 import MessageInput from "../../message/components/MessageInput";
+import Message from "../../message/components/Message";
+
 import type { IChatWithMembers } from "../types/chat";
 
 interface Props {
@@ -10,10 +13,13 @@ export default function Chat({ chat }: Props) {
   const mainRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (mainRef.current) {
-      mainRef.current.scrollTop = mainRef.current.scrollHeight;
-    }
-  }, [chat?.messages]); // Se ejecuta cuando cambia el chat
+    if (!mainRef.current) return;
+
+    mainRef.current.scrollTo({
+      top: mainRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  });
 
   if (!chat) return <div>Select a chat</div>;
 
@@ -24,20 +30,7 @@ export default function Chat({ chat }: Props) {
     >
       <ul className="flex flex-col">
         {chat.messages.map((message) => (
-          <li
-            key={message.id}
-            className={`${message.sent ? "text-right" : "text-left"} my-4`}
-          >
-            <span
-              className={`rounded-xl p-2 ${
-                message.sent
-                  ? "outline outline-2 outline-primary"
-                  : "bg-primary text-white"
-              }`}
-            >
-              {message.content}
-            </span>
-          </li>
+          <Message message={message} key={message.id} />
         ))}
       </ul>
       <MessageInput chatId={chat.id} />
