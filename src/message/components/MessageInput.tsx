@@ -5,7 +5,7 @@ import { SendIcon } from "./SendIcon";
 
 import { postMessage } from "../services/service";
 
-import type { ChangeEvent, MouseEvent } from "react";
+import type { ChangeEvent, KeyboardEvent, MouseEvent } from "react";
 
 interface Props {
   chatId: string;
@@ -17,7 +17,9 @@ export default function MessageInput({ chatId }: Props) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
     setMessage(event.target.value);
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (
+    event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>
+  ) => {
     event.preventDefault();
 
     if (!message || !socket.id) return;
@@ -25,6 +27,12 @@ export default function MessageInput({ chatId }: Props) {
     postMessage(chatId, { content: message, socketId: socket.id });
 
     setMessage("");
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== "Enter") return;
+
+    handleClick(event);
   };
 
   return (
@@ -44,6 +52,7 @@ export default function MessageInput({ chatId }: Props) {
         placeholder="Write here your message..."
         value={message}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
       />
     </div>
   );
