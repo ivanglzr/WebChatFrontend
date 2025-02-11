@@ -1,6 +1,8 @@
 import Form from "../../common/components/form/Form";
 
 import useValidationErrors from "../../common/hooks/useValidationErrors";
+import { useNavigate } from "react-router";
+import useUserId from "../hooks/useUserId";
 
 import { register } from "../services/service";
 
@@ -9,6 +11,8 @@ import { validateRegisterData } from "../schemas/auth";
 import type { FormEvent } from "react";
 import type { FormGroupProps } from "../../common/components/form/FormGroup";
 import type { IRegister } from "../types/auth";
+
+import { ROUTES } from "../../routes";
 
 const formGroups: FormGroupProps[] = [
   {
@@ -53,6 +57,9 @@ const formGroups: FormGroupProps[] = [
 ];
 
 export default function RegisterView() {
+  const { setUserId } = useUserId();
+  const navigate = useNavigate();
+
   const [errors, setError] = useValidationErrors<IRegister>({
     email: "",
     password: "",
@@ -80,7 +87,9 @@ export default function RegisterView() {
       return;
     }
 
-    alert(res.message);
+    setUserId(res.userId);
+
+    navigate(ROUTES.HOME);
   };
 
   return (

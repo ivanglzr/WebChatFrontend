@@ -2,6 +2,7 @@ import Form from "../../common/components/form/Form";
 
 import { useNavigate } from "react-router";
 import useValidationErrors from "../../common/hooks/useValidationErrors";
+import useUserId from "../hooks/useUserId";
 
 import { logIn } from "../services/service";
 
@@ -43,6 +44,7 @@ const formGroups: FormGroupProps[] = [
 ];
 
 export default function LogInView() {
+  const { setUserId } = useUserId();
   const navigate = useNavigate();
 
   const [errors, setError] = useValidationErrors<ILogin>({
@@ -70,6 +72,8 @@ export default function LogInView() {
 
       return;
     }
+
+    setUserId(res.userId);
 
     navigate(ROUTES.HOME);
   };
