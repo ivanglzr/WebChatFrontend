@@ -12,7 +12,7 @@ export default function Message({ message }: Props) {
       } my-0.5 last:mb-4`}
     >
       <span
-        className={`rounded-xl p-2 max-w-md inline-block text-left ${
+        className={`rounded-xl p-2 max-w-md inline-block break-all text-left ${
           message.sent
             ? "border-2 border-primary"
             : "bg-primary border-2 border-transparent text-white"
