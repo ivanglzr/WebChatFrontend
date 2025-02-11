@@ -3,7 +3,9 @@ import type { ILogin, IRegister } from "../types/auth";
 
 import { AUTH_ROUTES } from "./routes";
 
-export async function logIn(login: ILogin): Promise<IResponse | Error> {
+export async function logIn(
+  login: ILogin
+): Promise<(IResponse & { userId: string }) | Error> {
   try {
     const petition = await fetch(AUTH_ROUTES.LOG_IN, {
       method: "POST",
@@ -23,7 +25,7 @@ export async function logIn(login: ILogin): Promise<IResponse | Error> {
 
 export async function register(
   registerData: IRegister
-): Promise<IResponse | Error> {
+): Promise<(IResponse & { userId: string }) | Error> {
   try {
     const petition = await fetch(AUTH_ROUTES.REGISTER, {
       method: "POST",
