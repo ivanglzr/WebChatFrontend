@@ -5,8 +5,6 @@ interface Props {
 }
 
 export default function Message({ message }: Props) {
-  console.count("Message");
-
   return (
     <li
       className={`${
