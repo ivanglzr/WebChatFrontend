@@ -2,12 +2,16 @@ import { useContext } from "react";
 
 import { ChatsContext } from "../context/chats-context";
 
+import useUserId from "../../auth/hooks/useUserId";
+
 import { EChatsReducerActions } from "../types/chats-reducer";
 
 import type { IChatWithMembers } from "../types/chat";
 import type { IMessage } from "../../message/types/message";
 
 export default function useChats() {
+  const { userId } = useUserId();
+
   const { chats, error, loading, dispatch } = useContext(ChatsContext);
 
   const addChat = (chat: IChatWithMembers) =>
@@ -19,10 +23,10 @@ export default function useChats() {
   const deleteChat = (chatId: string) =>
     dispatch({ type: EChatsReducerActions.DELETE_CHAT, payload: chatId });
 
-  const addMessage = (payload: IMessage, isFromUser: boolean) =>
+  const addMessage = (payload: IMessage) =>
     dispatch({
       type: EChatsReducerActions.ADD_MESSAGE,
-      payload: { ...payload, sent: isFromUser },
+      payload: { ...payload, sent: payload.ownerId === userId },
     });
 
   const editMessage = (payload: IMessage) =>
