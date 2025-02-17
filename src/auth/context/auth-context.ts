@@ -1,8 +1,8 @@
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext } from "react";
 
 interface IAuthContext {
   userId: string;
-  setUserId: Dispatch<SetStateAction<string>>;
+  setUserId: (id: string) => void;
 }
 
 export const AuthContext = createContext<IAuthContext>({

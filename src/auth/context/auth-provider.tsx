@@ -6,7 +6,15 @@ interface Props {
 }
 
 export function AuthProvider({ children }: Props) {
-  const [userId, setUserId] = useState<string>("");
+  const [userId, setId] = useState<string>(
+    localStorage.getItem("userId") ?? ""
+  );
+
+  const setUserId = (id: string) => {
+    setId(id);
+
+    localStorage.setItem("userId", id);
+  };
 
   return (
     <AuthContext.Provider value={{ userId, setUserId }}>
